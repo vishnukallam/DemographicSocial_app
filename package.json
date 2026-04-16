@@ -1,0 +1,39 @@
+{
+  "name": "social-map-app",
+  "version": "1.0.0",
+  "description": "Social Map Application (MERN)",
+  "license": "MIT",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "build": "npm install && cd client && npm install && npm run build",
+    "dev": "concurrently \"npm start\" \"cd client && npm run dev\"",
+    "seed": "node server/scripts/seed.js",
+    "reset-cluster": "node server/scripts/resetCluster.js",
+    "reset-surgical": "node server/scripts/resetClusterSurgical.js",
+    "seed-ghosts": "node server/scripts/seedGhosts.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "concurrently": "^8.2.0",
+    "cors": "^2.8.5",
+    "crypto-js": "^4.2.0",
+    "csv-parse": "^5.6.0",
+    "csv-parser": "^3.2.0",
+    "dotenv": "^17.2.4",
+    "express": "^5.2.1",
+    "faker": "^6.6.6",
+    "jsonwebtoken": "^9.0.3",
+    "mongodb": "^7.0.0",
+    "mongoose": "^9.1.6",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0",
+    "socket.io": "^4.8.3"
+  },
+  "engines": {
+    "node": ">=18.x"
+  },
+  "devDependencies": {
+    "playwright": "^1.58.1"
+  }
+}
