@@ -1,0 +1,146 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-variant-caps: small-caps;
+  }
+
+  .material-symbols-outlined {
+    font-variant-caps: normal;
+  }
+
+  :root {
+    /* Light Theme (Red Tone - from secure_login_1) */
+    --color-primary: #be3627;
+    --color-primary-container: #fee2e2;
+    --color-on-primary: #FFFFFF;
+    --color-on-primary-container: #450A0A;
+
+    --color-secondary: #5e413d;
+    --color-tertiary: #915b55;
+    --color-error: #be3627;
+
+    --color-background-light: #f8f6f6;
+    --color-background-dark: #141218;
+
+    --color-surface: #ffffff;
+    --color-surface-light: #ffffff;
+    --color-surface-dark: #141218;
+
+    --color-surface-container: #f2e9e9;
+    --color-surface-container-light: #f2e9e9;
+    --color-surface-container-dark: #231f29;
+
+    --color-on-surface: #1a100f;
+    --color-on-surface-light: #1a100f;
+    --color-on-surface-dark: #E6E1E5;
+
+    --color-outline: #79747E;
+    --color-outline-light: #79747E;
+    --color-outline-dark: #938F99;
+
+    /* Background Effects */
+    --bg-map-url: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAJ8VVsGQsbQ71t7tcICQyIClCf8Uxwz0gCzvDqLmrgOJ9L9bi583sZn0HvniYez3uplEVS_gc97irtF3KtFQzNCk7ipt9E7bpZAWUicWX1Xzf1RW4QIgEtLiBeu5x9hJ4AlAYuObSbFjednl_JFlmNti9E1L97nltPIIy1qCgap2gY3KtlIMpy5wI0qdywUI30ttquQBFTUCgYzf4GtZJ-IGLB4SgtSHQGZDdyigDUYed9hPTfDJQX_KFfOYcHuiSt4NaH7CMvTCZe');
+    --blur-tint: rgba(190, 54, 39, 0.05);
+    /* Light Red Tint */
+    --glass-border: rgba(190, 54, 39, 0.1);
+    --knob-border: #ffffff;
+  }
+
+  .dark {
+    /* Dark Theme (Purple Tone - from secure_login_4) */
+    --color-primary: #D0BCFF;
+    --color-primary-container: #4A0080;
+    --color-on-primary: #381E72;
+    --color-on-primary-container: #EADDFF;
+
+    --color-secondary: #CCC2DC;
+    --color-tertiary: #EFB8C8;
+    --color-error: #F2B8B5;
+
+    --color-surface: #141218;
+    --color-on-surface: #E6E1E5;
+
+    --color-surface-container: #231f29;
+
+    --color-outline: #938F99;
+
+    /* Visual Effects */
+    --blur-tint: rgba(208, 188, 255, 0.05);
+    /* Light Purple Tint */
+    /* Dark Mode Border */
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --knob-border: #141218;
+  }
+}
+
+/* Base styles from original index.css */
+/* Base styles from original index.css */
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  font-weight: 600;
+  /* Directive 1: Global font-weight 600 */
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE/Edge */
+  /* overflow: hidden; Removed to allow scrolling */
+}
+
+/* Chrome, Safari, Opera */
+::-webkit-scrollbar {
+  display: none;
+}
+
+@media (max-height: 800px) {
+
+  html,
+  body,
+  #root {
+    font-size: 14px;
+    /* Compact Mode */
+  }
+}
+
+@layer components {
+
+  /* Directive 1: Dual-Surface System */
+  .m3-surface-container {
+    background-color: #ffffff;
+    border-width: 1px;
+    border-color: #e5e7eb;
+    /* gray-200 */
+  }
+
+  :is(.dark .m3-surface-container) {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+    /* white/10 */
+    backdrop-filter: blur(40px);
+    /* 2xl */
+    -webkit-backdrop-filter: blur(40px);
+  }
+
+  /* Directive 2: Squircle Shape */
+  /* Using a consistent large rounded radius (24px) for the 'Squircle' feel */
+  .squircle {
+    border-radius: 24px;
+  }
+
+  .squircle-full {
+    border-radius: 32px;
+  }
+
+  /* For buttons */
+  .squircle-btn {
+    border-radius: 18px;
+  }
+}
