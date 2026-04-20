@@ -38,9 +38,33 @@ const teamData = [
     }
 ];
 
+const GmailSVG = () => (
+    <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="22" height="22">
+        <path fill="#ffd54f" d="M45,16.2l-5,2.75l-5,4.75L35,40h7c1.657,0,3-1.343,3-3V16.2z"/>
+        <path fill="#ff6d00" d="M3,16.2l3.614,1.71L13,23.7V40H6c-1.657,0-3-1.343-3-3V16.2z"/>
+        <polygon fill="#ff3d00" points="35,11.2 24,19.45 13,11.2 12,17 13,23.7 24,31.95 35,23.7 36,17"/>
+        <path fill="#ff3d00" d="M3,12.298V16.2l10,7.5V11.2L9.876,8.859C9.132,8.301,8.228,8,7.298,8h0C4.924,8,3,9.924,3,12.298z"/>
+        <path fill="#ffd54f" d="M45,12.298V16.2l-10,7.5V11.2l3.124-2.341C38.868,8.301,39.772,8,40.702,8h0C43.076,8,45,9.924,45,12.298z"/>
+    </svg>
+);
+
 const Landing = () => {
     const navigate = useNavigate();
     const { toggleColorMode, mode } = useContext(ColorModeContext);
+
+    const openGmail = (toEmail) => {
+        const subject = encodeURIComponent('Someone wants to contact you — Demographic App');
+        const body = encodeURIComponent(
+`This mail is from the demographic app, someone wants to contact with you.
+
+Name: [Name of the person who wants to Contact]
+Mail: [The person's Gmail who wants to contact]`
+        );
+        window.open(
+            `https://mail.google.com/mail/?view=cm&fs=1&to=${toEmail}&su=${subject}&body=${body}`,
+            '_blank'
+        );
+    };
 
     return (
         <div className="min-h-[100dvh] w-full flex flex-col bg-[#f8f6f6] dark:bg-[#0f0d13] text-[#1a100f] dark:text-[#E6E1E5] font-display relative overflow-hidden selection:bg-primary/30">
@@ -210,12 +234,7 @@ const Landing = () => {
                         <p className="text-sm font-medium text-[#5e413d] dark:text-[#CAC4D0] mt-2">The people behind KON-NECT</p>
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-                        {teamData.map((member, idx) => {
-                            const mailSubject = encodeURIComponent("Demographic app");
-                            const mailBody = encodeURIComponent("This mail is from the demographic app someone wants to contact with you \nName : [Name of the person who wants to contact]\nMail : [the person mail who wants to contact]");
-                            const mailToLink = `mailto:${member.mail}?subject=${mailSubject}&body=${mailBody}`;
-
-                            return (
+                        {teamData.map((member, idx) => (
                                 <div key={idx} className="p-6 rounded-3xl bg-white/40 dark:bg-black/40 backdrop-blur-3xl border border-white/50 dark:border-white/10 shadow-2xl hover:bg-white/60 dark:hover:bg-white/5 transition-all duration-300 overflow-hidden relative group flex flex-col items-center">
                                     {/* Github icon watermark for github members */}
                                     {member.github && (
@@ -225,20 +244,49 @@ const Landing = () => {
                                     )}
 
                                     <div className="relative z-10 flex flex-col items-center h-full text-center">
-                                        <a href={mailToLink} title="Send Mail">
+                                        <button
+                                            onClick={() => openGmail(member.mail)}
+                                            title={`Email ${member.name}`}
+                                            className="focus:outline-none"
+                                        >
                                             <img
                                                 src={member.avatar}
                                                 alt={member.name}
                                                 className="w-20 h-20 rounded-full border-4 border-white/50 dark:border-white/10 shadow-lg group-hover:scale-110 transition-transform duration-300 object-cover cursor-pointer hover:shadow-xl"
                                             />
-                                        </a>
+                                        </button>
                                         <div className="mt-4 flex flex-col items-center flex-grow">
                                             <span className="text-[10px] font-black uppercase tracking-widest text-primary mb-1">{member.role}</span>
                                             <h3 className="text-sm font-black text-[#1a100f] dark:text-white mb-2 leading-tight">{member.name}</h3>
-                                            <div className="mt-auto space-y-1">
-                                                <p className="text-xs font-medium text-[#5e413d] dark:text-[#CAC4D0]">
-                                                    Gmail: <a href={mailToLink} className="hover:underline">{member.mail}</a>
-                                                </p>
+                                            <div className="mt-auto space-y-2">
+                                                {/* Gmail logo button */}
+                                                <button
+                                                    onClick={() => openGmail(member.mail)}
+                                                    title={`Compose Gmail to ${member.name}`}
+                                                    style={{
+                                                        background: 'none',
+                                                        border: 'none',
+                                                        cursor: 'pointer',
+                                                        padding: '6px',
+                                                        borderRadius: '50%',
+                                                        display: 'inline-flex',
+                                                        alignItems: 'center',
+                                                        justifyContent: 'center',
+                                                        transition: 'transform 0.18s ease, background 0.18s ease',
+                                                    }}
+                                                    onMouseEnter={e => {
+                                                        e.currentTarget.style.transform = 'scale(1.15)';
+                                                        e.currentTarget.style.background = 'rgba(0,0,0,0.06)';
+                                                    }}
+                                                    onMouseLeave={e => {
+                                                        e.currentTarget.style.transform = 'scale(1)';
+                                                        e.currentTarget.style.background = 'none';
+                                                    }}
+                                                    onMouseDown={e => e.currentTarget.style.transform = 'scale(0.94)'}
+                                                    onMouseUp={e => e.currentTarget.style.transform = 'scale(1.15)'}
+                                                >
+                                                    <GmailSVG />
+                                                </button>
                                                 {member.github && (
                                                     <p className="text-xs font-medium text-[#5e413d] dark:text-[#CAC4D0] truncate max-w-[150px]">
                                                         GitHub: <a href={member.github} target="_blank" rel="noreferrer" className="hover:underline text-primary/80">{member.github.split('github.com/')[1]}</a>
@@ -248,8 +296,7 @@ const Landing = () => {
                                         </div>
                                     </div>
                                 </div>
-                            )
-                        })}
+                            ))}
                     </div>
                 </div>
             </main>
