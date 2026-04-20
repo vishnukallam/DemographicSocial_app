@@ -33,8 +33,8 @@ const teamData = [
     {
         name: "K Ashrith Sarang",
         mail: "kashrithsarang@gmail.com",
-        github: "",
-        avatar: "https://ui-avatars.com/api/?name=K+Ashrith+Sarang&background=random&size=150"
+        github: "https://github.com/Ashrith-1",
+        avatar: "https://github.com/Ashrith-1.png"
     }
 ];
 
