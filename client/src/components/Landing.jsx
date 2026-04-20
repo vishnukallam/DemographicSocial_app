@@ -6,35 +6,31 @@ import M3Switch from './M3Switch';
 
 const teamData = [
     {
-        role: "Mentor",
         name: "K Gopala Reddy",
         mail: "emailme.kallam@gmail.com",
         github: "",
         avatar: "https://ui-avatars.com/api/?name=K+Gopala+Reddy&background=random&size=150"
     },
     {
-        role: "Team Member - 1",
         name: "V Chinni Akash Sri Krishna",
         mail: "akashveerla0@gmail.com",
         github: "https://github.com/Akash-Veerla",
         avatar: "https://github.com/Akash-Veerla.png"
     },
     {
-        role: "Team Member - 2",
         name: "A M Manoj Kumar",
         mail: "manojamarapu@gmail.com",
         github: "https://github.com/ManojAmarapu",
         avatar: "https://github.com/ManojAmarapu.png"
     },
     {
-        role: "Team Member - 3",
+
         name: "K Vishnu Vardhan Reddy", // Fixed spelling of Vradhan
         mail: "emialme.vishnuvardhan@gmail.com", // Fixed domain typo
         github: "https://github.com/vishnukallam",
         avatar: "https://github.com/vishnukallam.png"
     },
     {
-        role: "Team Member - 4",
         name: "K Ashrith Sarang",
         mail: "kashrithsarang@gmail.com",
         github: "",
@@ -220,39 +216,40 @@ const Landing = () => {
                             const mailToLink = `mailto:${member.mail}?subject=${mailSubject}&body=${mailBody}`;
 
                             return (
-                            <div key={idx} className="p-6 rounded-3xl bg-white/40 dark:bg-black/40 backdrop-blur-3xl border border-white/50 dark:border-white/10 shadow-2xl hover:bg-white/60 dark:hover:bg-white/5 transition-all duration-300 overflow-hidden relative group flex flex-col items-center">
-                                {/* Github icon watermark for github members */}
-                                {member.github && (
-                                    <div className="absolute top-0 right-0 p-4 opacity-[0.05] group-hover:opacity-[0.16] group-hover:rotate-12 group-hover:scale-125 transition-all duration-300 text-[#1a100f] dark:text-white">
-                                        <Users size={80} strokeWidth={1.5} />
-                                    </div>
-                                )}
-                                
-                                <div className="relative z-10 flex flex-col items-center h-full text-center">
-                                    <a href={mailToLink} title="Send Mail">
-                                        <img 
-                                            src={member.avatar} 
-                                            alt={member.name} 
-                                            className="w-20 h-20 rounded-full border-4 border-white/50 dark:border-white/10 shadow-lg group-hover:scale-110 transition-transform duration-300 object-cover cursor-pointer hover:shadow-xl" 
-                                        />
-                                    </a>
-                                    <div className="mt-4 flex flex-col items-center flex-grow">
-                                        <span className="text-[10px] font-black uppercase tracking-widest text-primary mb-1">{member.role}</span>
-                                        <h3 className="text-sm font-black text-[#1a100f] dark:text-white mb-2 leading-tight">{member.name}</h3>
-                                        <div className="mt-auto space-y-1">
-                                            <p className="text-xs font-medium text-[#5e413d] dark:text-[#CAC4D0]">
-                                                Gmail: <a href={mailToLink} className="hover:underline">{member.mail}</a>
-                                            </p>
-                                            {member.github && (
-                                                <p className="text-xs font-medium text-[#5e413d] dark:text-[#CAC4D0] truncate max-w-[150px]">
-                                                    GitHub: <a href={member.github} target="_blank" rel="noreferrer" className="hover:underline text-primary/80">{member.github.split('github.com/')[1]}</a>
+                                <div key={idx} className="p-6 rounded-3xl bg-white/40 dark:bg-black/40 backdrop-blur-3xl border border-white/50 dark:border-white/10 shadow-2xl hover:bg-white/60 dark:hover:bg-white/5 transition-all duration-300 overflow-hidden relative group flex flex-col items-center">
+                                    {/* Github icon watermark for github members */}
+                                    {member.github && (
+                                        <div className="absolute top-0 right-0 p-4 opacity-[0.05] group-hover:opacity-[0.16] group-hover:rotate-12 group-hover:scale-125 transition-all duration-300 text-[#1a100f] dark:text-white">
+                                            <Users size={80} strokeWidth={1.5} />
+                                        </div>
+                                    )}
+
+                                    <div className="relative z-10 flex flex-col items-center h-full text-center">
+                                        <a href={mailToLink} title="Send Mail">
+                                            <img
+                                                src={member.avatar}
+                                                alt={member.name}
+                                                className="w-20 h-20 rounded-full border-4 border-white/50 dark:border-white/10 shadow-lg group-hover:scale-110 transition-transform duration-300 object-cover cursor-pointer hover:shadow-xl"
+                                            />
+                                        </a>
+                                        <div className="mt-4 flex flex-col items-center flex-grow">
+                                            <span className="text-[10px] font-black uppercase tracking-widest text-primary mb-1">{member.role}</span>
+                                            <h3 className="text-sm font-black text-[#1a100f] dark:text-white mb-2 leading-tight">{member.name}</h3>
+                                            <div className="mt-auto space-y-1">
+                                                <p className="text-xs font-medium text-[#5e413d] dark:text-[#CAC4D0]">
+                                                    Gmail: <a href={mailToLink} className="hover:underline">{member.mail}</a>
                                                 </p>
-                                            )}
+                                                {member.github && (
+                                                    <p className="text-xs font-medium text-[#5e413d] dark:text-[#CAC4D0] truncate max-w-[150px]">
+                                                        GitHub: <a href={member.github} target="_blank" rel="noreferrer" className="hover:underline text-primary/80">{member.github.split('github.com/')[1]}</a>
+                                                    </p>
+                                                )}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        )})}
+                            )
+                        })}
                     </div>
                 </div>
             </main>
