@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MapPin, MessageSquare, Lock, Users, ArrowRight, Sparkles, Navigation, Globe } from 'lucide-react';
+import { MapPin, MessageSquare, Lock, Users, ArrowRight, Sparkles, Navigation, Globe, Github } from 'lucide-react';
 import { ColorModeContext } from '../App';
 import M3Switch from './M3Switch';
 
@@ -273,7 +273,7 @@ Mail: [The person's Gmail who wants to contact]`
                                     <div className="mt-4 flex flex-col items-center flex-grow">
                                         <span className="text-[10px] font-black uppercase tracking-widest text-primary mb-1">{member.role}</span>
                                         <h3 className="text-sm font-black text-[#1a100f] dark:text-white mb-2 leading-tight">{member.name}</h3>
-                                        <div className="mt-auto space-y-2">
+                                        <div className="flex items-center gap-2">
                                             {/* Gmail logo button */}
                                             <button
                                                 onClick={() => openGmail(member.mail)}
@@ -303,9 +303,38 @@ Mail: [The person's Gmail who wants to contact]`
                                                 <GmailSVG />
                                             </button>
                                             {member.github && (
-                                                <p className="text-xs font-medium text-[#5e413d] dark:text-[#CAC4D0] truncate max-w-[150px]">
-                                                    GitHub: <a href={member.github} target="_blank" rel="noreferrer" className="hover:underline text-primary/80">{member.github.split('github.com/')[1]}</a>
-                                                </p>
+                                                <a
+                                                    href={member.github}
+                                                    target="_blank"
+                                                    rel="noreferrer"
+                                                    title={`Visit ${member.name}'s GitHub`}
+                                                    style={{
+                                                        background: 'none',
+                                                        border: 'none',
+                                                        cursor: 'pointer',
+                                                        padding: '6px',
+                                                        borderRadius: '50%',
+                                                        display: 'inline-flex',
+                                                        alignItems: 'center',
+                                                        justifyContent: 'center',
+                                                        transition: 'transform 0.18s ease, background 0.18s ease',
+                                                        color: mode === 'dark' ? '#E6E1E5' : '#1a100f'
+                                                    }}
+                                                    onMouseEnter={e => {
+                                                        e.currentTarget.style.transform = 'scale(1.15)';
+                                                        e.currentTarget.style.background = 'rgba(0,0,0,0.06)';
+                                                        e.currentTarget.style.color = '#be3627';
+                                                    }}
+                                                    onMouseLeave={e => {
+                                                        e.currentTarget.style.transform = 'scale(1)';
+                                                        e.currentTarget.style.background = 'none';
+                                                        e.currentTarget.style.color = mode === 'dark' ? '#E6E1E5' : '#1a100f';
+                                                    }}
+                                                    onMouseDown={e => e.currentTarget.style.transform = 'scale(0.94)'}
+                                                    onMouseUp={e => e.currentTarget.style.transform = 'scale(1.15)'}
+                                                >
+                                                    <Github size={20} />
+                                                </a>
                                             )}
                                         </div>
                                     </div>
