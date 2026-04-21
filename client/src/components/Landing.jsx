@@ -9,42 +9,47 @@ const teamData = [
         name: "K Gopala Reddy",
         mail: "emailme.kallam@gmail.com",
         github: "",
-        avatar: "https://ui-avatars.com/api/?name=K+Gopala+Reddy&background=random&size=150"
+        avatar: "https://ui-avatars.com/api/?name=K+Gopala+Reddy&background=random&size=150",
+
     },
     {
         name: "V Chinni Akash Sri Krishna",
         mail: "akashveerla0@gmail.com",
         github: "https://github.com/Akash-Veerla",
-        avatar: "https://github.com/Akash-Veerla.png"
+        avatar: "https://github.com/Akash-Veerla.png",
+
     },
     {
         name: "A M Manoj Kumar",
         mail: "manojamarapu@gmail.com",
         github: "https://github.com/ManojAmarapu",
-        avatar: "https://github.com/ManojAmarapu.png"
+        avatar: "https://github.com/ManojAmarapu.png",
+
     },
     {
 
-        name: "K Vishnu Vardhan Reddy", // Fixed spelling of Vradhan
-        mail: "emialme.vishnuvardhan@gmail.com", // Fixed domain typo
+        name: "K Vishnu Vardhan Reddy",
+        mail: "emailme.vishnuvardhan@gmail.com",
         github: "https://github.com/vishnukallam",
-        avatar: "https://github.com/vishnukallam.png"
+        avatar: "https://github.com/vishnukallam.png",
+
     },
     {
         name: "K Ashrith Sarang",
         mail: "kashrithsarang@gmail.com",
         github: "https://github.com/Ashrith-1",
-        avatar: "https://github.com/Ashrith-1.png"
+        avatar: "https://github.com/Ashrith-1.png",
+
     }
 ];
 
 const GmailSVG = () => (
     <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="22" height="22">
-        <path fill="#ffd54f" d="M45,16.2l-5,2.75l-5,4.75L35,40h7c1.657,0,3-1.343,3-3V16.2z"/>
-        <path fill="#ff6d00" d="M3,16.2l3.614,1.71L13,23.7V40H6c-1.657,0-3-1.343-3-3V16.2z"/>
-        <polygon fill="#ff3d00" points="35,11.2 24,19.45 13,11.2 12,17 13,23.7 24,31.95 35,23.7 36,17"/>
-        <path fill="#ff3d00" d="M3,12.298V16.2l10,7.5V11.2L9.876,8.859C9.132,8.301,8.228,8,7.298,8h0C4.924,8,3,9.924,3,12.298z"/>
-        <path fill="#ffd54f" d="M45,12.298V16.2l-10,7.5V11.2l3.124-2.341C38.868,8.301,39.772,8,40.702,8h0C43.076,8,45,9.924,45,12.298z"/>
+        <path fill="#ffd54f" d="M45,16.2l-5,2.75l-5,4.75L35,40h7c1.657,0,3-1.343,3-3V16.2z" />
+        <path fill="#ff6d00" d="M3,16.2l3.614,1.71L13,23.7V40H6c-1.657,0-3-1.343-3-3V16.2z" />
+        <polygon fill="#ff3d00" points="35,11.2 24,19.45 13,11.2 12,17 13,23.7 24,31.95 35,23.7 36,17" />
+        <path fill="#ff3d00" d="M3,12.298V16.2l10,7.5V11.2L9.876,8.859C9.132,8.301,8.228,8,7.298,8h0C4.924,8,3,9.924,3,12.298z" />
+        <path fill="#ffd54f" d="M45,12.298V16.2l-10,7.5V11.2l3.124-2.341C38.868,8.301,39.772,8,40.702,8h0C43.076,8,45,9.924,45,12.298z" />
     </svg>
 );
 
@@ -55,15 +60,25 @@ const Landing = () => {
     const openGmail = (toEmail) => {
         const subject = encodeURIComponent('Someone wants to contact you — Demographic App');
         const body = encodeURIComponent(
-`This mail is from the demographic app, someone wants to contact with you.
+            `This mail is from the demographic app, someone wants to contact with you.
 
 Name: [Name of the person who wants to Contact]
 Mail: [The person's Gmail who wants to contact]`
         );
-        window.open(
-            `https://mail.google.com/mail/?view=cm&fs=1&to=${toEmail}&su=${subject}&body=${body}`,
-            '_blank'
-        );
+
+        // Detect if the user is on a mobile device
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+        if (isMobile) {
+            // On mobile, mailto is more reliable for opening the native mail app (like Gmail)
+            window.location.href = `mailto:${toEmail}?subject=${subject}&body=${body}`;
+        } else {
+            // On desktop, the Gmail web interface is preferred
+            window.open(
+                `https://mail.google.com/mail/?view=cm&fs=1&to=${toEmail}&su=${subject}&body=${body}`,
+                '_blank'
+            );
+        }
     };
 
     return (
@@ -235,68 +250,68 @@ Mail: [The person's Gmail who wants to contact]`
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
                         {teamData.map((member, idx) => (
-                                <div key={idx} className="p-6 rounded-3xl bg-white/40 dark:bg-black/40 backdrop-blur-3xl border border-white/50 dark:border-white/10 shadow-2xl hover:bg-white/60 dark:hover:bg-white/5 transition-all duration-300 overflow-hidden relative group flex flex-col items-center">
-                                    {/* Github icon watermark for github members */}
-                                    {member.github && (
-                                        <div className="absolute top-0 right-0 p-4 opacity-[0.05] group-hover:opacity-[0.16] group-hover:rotate-12 group-hover:scale-125 transition-all duration-300 text-[#1a100f] dark:text-white">
-                                            <Users size={80} strokeWidth={1.5} />
-                                        </div>
-                                    )}
+                            <div key={idx} className="p-6 rounded-3xl bg-white/40 dark:bg-black/40 backdrop-blur-3xl border border-white/50 dark:border-white/10 shadow-2xl hover:bg-white/60 dark:hover:bg-white/5 transition-all duration-300 overflow-hidden relative group flex flex-col items-center">
+                                {/* Github icon watermark for github members */}
+                                {member.github && (
+                                    <div className="absolute top-0 right-0 p-4 opacity-[0.05] group-hover:opacity-[0.16] group-hover:rotate-12 group-hover:scale-125 transition-all duration-300 text-[#1a100f] dark:text-white">
+                                        <Users size={80} strokeWidth={1.5} />
+                                    </div>
+                                )}
 
-                                    <div className="relative z-10 flex flex-col items-center h-full text-center">
-                                        <button
-                                            onClick={() => openGmail(member.mail)}
-                                            title={`Email ${member.name}`}
-                                            className="focus:outline-none"
-                                        >
-                                            <img
-                                                src={member.avatar}
-                                                alt={member.name}
-                                                className="w-20 h-20 rounded-full border-4 border-white/50 dark:border-white/10 shadow-lg group-hover:scale-110 transition-transform duration-300 object-cover cursor-pointer hover:shadow-xl"
-                                            />
-                                        </button>
-                                        <div className="mt-4 flex flex-col items-center flex-grow">
-                                            <span className="text-[10px] font-black uppercase tracking-widest text-primary mb-1">{member.role}</span>
-                                            <h3 className="text-sm font-black text-[#1a100f] dark:text-white mb-2 leading-tight">{member.name}</h3>
-                                            <div className="mt-auto space-y-2">
-                                                {/* Gmail logo button */}
-                                                <button
-                                                    onClick={() => openGmail(member.mail)}
-                                                    title={`Compose Gmail to ${member.name}`}
-                                                    style={{
-                                                        background: 'none',
-                                                        border: 'none',
-                                                        cursor: 'pointer',
-                                                        padding: '6px',
-                                                        borderRadius: '50%',
-                                                        display: 'inline-flex',
-                                                        alignItems: 'center',
-                                                        justifyContent: 'center',
-                                                        transition: 'transform 0.18s ease, background 0.18s ease',
-                                                    }}
-                                                    onMouseEnter={e => {
-                                                        e.currentTarget.style.transform = 'scale(1.15)';
-                                                        e.currentTarget.style.background = 'rgba(0,0,0,0.06)';
-                                                    }}
-                                                    onMouseLeave={e => {
-                                                        e.currentTarget.style.transform = 'scale(1)';
-                                                        e.currentTarget.style.background = 'none';
-                                                    }}
-                                                    onMouseDown={e => e.currentTarget.style.transform = 'scale(0.94)'}
-                                                    onMouseUp={e => e.currentTarget.style.transform = 'scale(1.15)'}
-                                                >
-                                                    <GmailSVG />
-                                                </button>
-                                                {member.github && (
-                                                    <p className="text-xs font-medium text-[#5e413d] dark:text-[#CAC4D0] truncate max-w-[150px]">
-                                                        GitHub: <a href={member.github} target="_blank" rel="noreferrer" className="hover:underline text-primary/80">{member.github.split('github.com/')[1]}</a>
-                                                    </p>
-                                                )}
-                                            </div>
+                                <div className="relative z-10 flex flex-col items-center h-full text-center">
+                                    <button
+                                        onClick={() => openGmail(member.mail)}
+                                        title={`Email ${member.name}`}
+                                        className="focus:outline-none"
+                                    >
+                                        <img
+                                            src={member.avatar}
+                                            alt={member.name}
+                                            className="w-20 h-20 rounded-full border-4 border-white/50 dark:border-white/10 shadow-lg group-hover:scale-110 transition-transform duration-300 object-cover cursor-pointer hover:shadow-xl"
+                                        />
+                                    </button>
+                                    <div className="mt-4 flex flex-col items-center flex-grow">
+                                        <span className="text-[10px] font-black uppercase tracking-widest text-primary mb-1">{member.role}</span>
+                                        <h3 className="text-sm font-black text-[#1a100f] dark:text-white mb-2 leading-tight">{member.name}</h3>
+                                        <div className="mt-auto space-y-2">
+                                            {/* Gmail logo button */}
+                                            <button
+                                                onClick={() => openGmail(member.mail)}
+                                                title={`Compose Gmail to ${member.name}`}
+                                                style={{
+                                                    background: 'none',
+                                                    border: 'none',
+                                                    cursor: 'pointer',
+                                                    padding: '6px',
+                                                    borderRadius: '50%',
+                                                    display: 'inline-flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                    transition: 'transform 0.18s ease, background 0.18s ease',
+                                                }}
+                                                onMouseEnter={e => {
+                                                    e.currentTarget.style.transform = 'scale(1.15)';
+                                                    e.currentTarget.style.background = 'rgba(0,0,0,0.06)';
+                                                }}
+                                                onMouseLeave={e => {
+                                                    e.currentTarget.style.transform = 'scale(1)';
+                                                    e.currentTarget.style.background = 'none';
+                                                }}
+                                                onMouseDown={e => e.currentTarget.style.transform = 'scale(0.94)'}
+                                                onMouseUp={e => e.currentTarget.style.transform = 'scale(1.15)'}
+                                            >
+                                                <GmailSVG />
+                                            </button>
+                                            {member.github && (
+                                                <p className="text-xs font-medium text-[#5e413d] dark:text-[#CAC4D0] truncate max-w-[150px]">
+                                                    GitHub: <a href={member.github} target="_blank" rel="noreferrer" className="hover:underline text-primary/80">{member.github.split('github.com/')[1]}</a>
+                                                </p>
+                                            )}
                                         </div>
                                     </div>
                                 </div>
-                            ))}
+                            </div>
+                        ))}
                     </div>
                 </div>
             </main>
