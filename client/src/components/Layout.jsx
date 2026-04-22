@@ -11,6 +11,7 @@ import M3SegmentedButton from './M3SegmentedButton';
 import M3Snackbar from './M3Snackbar';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { requestNotificationPermission, sendNotification } from '../utils/notifications';
+import UserGuide from './UserGuide';
 
 const Layout = ({ children }) => {
     const { user, logout } = useAuth();
@@ -350,6 +351,9 @@ const Layout = ({ children }) => {
                 onDismiss={() => setNotifAlert(null)}
                 duration={5000}
             />
+
+            {/* First-Time User Guide */}
+            {user && <UserGuide />}
         </Box>
     );
 };
