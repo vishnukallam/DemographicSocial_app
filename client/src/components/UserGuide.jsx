@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { MessageCircle, Check, SkipForward } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
 
 const guideSteps = [
     { path: '/setup', message: 'You can upload a profile photo or paste an image URL. Fill in your bio so others can learn about you.' },
@@ -26,7 +25,6 @@ const guideSteps = [
 ];
 
 const UserGuide = () => {
-    const { user } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
     
@@ -36,20 +34,24 @@ const UserGuide = () => {
     useEffect(() => {
         const completed = localStorage.getItem('konnect_guide_completed');
         if (!completed) {
+            // Delay showing to let the layout render
             const timer = setTimeout(() => {
-                setIsVisible(true);
-                // If the user already has a complete profile, jump straight to the Home tour
-                if (location.pathname === '/home' && user?.interests?.length > 0) {
-                    const firstHomeIdx = guideSteps.findIndex(s => s.path === '/home');
-                    setCurrentStep(firstHomeIdx);
-                } else if (location.pathname !== guideSteps[0].path) {
-                    // For truly new users, route them to the first setup step
+                // Find the first step that matches the current location
+                const matchingStepIdx = guideSteps.findIndex(s => s.path === location.pathname);
+                
+                if (matchingStepIdx !== -1) {
+                    setCurrentStep(matchingStepIdx);
+                } else {
+                    // If no match (e.g. they are on /welcome or something else), 
+                    // we navigate to the first step of the tour
                     navigate(guideSteps[0].path);
                 }
+                
+                setIsVisible(true);
             }, 1500);
             return () => clearTimeout(timer);
         }
-    }, [location.pathname, navigate, user]);
+    }, []); // Empty dependency array to ensure it only initializes once on mount
     
     if (!isVisible) return null;
     
@@ -59,21 +61,12 @@ const UserGuide = () => {
         if (currentStep < guideSteps.length - 1) {
             const nextIdx = currentStep + 1;
             const nextStep = guideSteps[nextIdx];
-            const currentStepPath = guideSteps[currentStep].path;
-
-            // Prevent navigating away from setup if profile isn't saved yet
-            if (currentStepPath === '/setup' && nextStep.path !== '/setup') {
-                if (!user?.interests || user.interests.length === 0) {
-                    alert("Please complete and save your profile setup to continue the tour!");
-                    return;
-                }
-            }
-
+            
+            // Advance the state first
             setCurrentStep(nextIdx);
-
-            // Always navigate when the NEXT step's page differs from the CURRENT step's page.
-            // We compare step paths (not live location) so the transition fires reliably.
-            if (currentStepPath !== nextStep.path) {
+            
+            // If the next step is on a different page, navigate there
+            if (location.pathname !== nextStep.path) {
                 navigate(nextStep.path);
             }
         } else {
