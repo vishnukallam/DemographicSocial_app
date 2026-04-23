@@ -3,9 +3,6 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { MessageCircle, Check, SkipForward } from 'lucide-react';
 
 const guideSteps = [
-    { path: '/setup', message: 'You can upload a profile photo or paste an image URL. Fill in your bio so others can learn about you.' },
-    { path: '/setup', message: 'If you signed in with a social provider, set a local password here so you can also log in with your email and password.' },
-    { path: '/setup', message: 'Select your interests from the list or add a custom one. These are used to match you with nearby people who share the same passions.' },
     { path: '/home', message: 'This is your Home page. It shows a live summary of what is happening near you right now.' },
     { path: '/home', message: 'This card shows how many of your friends are within 20km of your current location.' },
     { path: '/home', message: 'This card shows how many people nearby share the same interests as you.' },
@@ -21,7 +18,10 @@ const guideSteps = [
     { path: '/friends', message: 'The Friends page shows your confirmed friends. Click on any friend to open a chat and message them. Their online/offline status is shown below their name.' },
     { path: '/profile', message: 'This is your Profile page. It shows your name, email, bio, and your selected interests.' },
     { path: '/profile', message: 'Click Edit Bio & Interests to update what others see about you.' },
-    { path: '/profile', message: 'Here you can change your password, manage blocked users, or delete your account from the Danger Zone section.' }
+    { path: '/profile', message: 'Here you can change your password, manage blocked users, or delete your account from the Danger Zone section.' },
+    { path: '/setup', message: 'You can upload a profile photo or paste an image URL. Fill in your bio so others can learn about you.' },
+    { path: '/setup', message: 'If you signed in with a social provider, set a local password here so you can also log in with your email and password.' },
+    { path: '/setup', message: 'Select your interests from the list or add a custom one. These are used to match you with nearby people who share the same passions.' }
 ];
 
 const UserGuide = () => {
@@ -34,24 +34,16 @@ const UserGuide = () => {
     useEffect(() => {
         const completed = localStorage.getItem('konnect_guide_completed');
         if (!completed) {
-            // Delay showing to let the layout render
+            // Delay showing to let the layout render and see if we are on /home
             const timer = setTimeout(() => {
-                // Find the first step that matches the current location
-                const matchingStepIdx = guideSteps.findIndex(s => s.path === location.pathname);
-                
-                if (matchingStepIdx !== -1) {
-                    setCurrentStep(matchingStepIdx);
-                } else {
-                    // If no match (e.g. they are on /welcome or something else), 
-                    // we navigate to the first step of the tour
+                setIsVisible(true);
+                if (location.pathname !== guideSteps[0].path) {
                     navigate(guideSteps[0].path);
                 }
-                
-                setIsVisible(true);
             }, 1500);
             return () => clearTimeout(timer);
         }
-    }, []); // Empty dependency array to ensure it only initializes once on mount
+    }, [location.pathname, navigate]);
     
     if (!isVisible) return null;
     
@@ -60,12 +52,8 @@ const UserGuide = () => {
     const handleNext = () => {
         if (currentStep < guideSteps.length - 1) {
             const nextIdx = currentStep + 1;
-            const nextStep = guideSteps[nextIdx];
-            
-            // Advance the state first
             setCurrentStep(nextIdx);
-            
-            // If the next step is on a different page, navigate there
+            const nextStep = guideSteps[nextIdx];
             if (location.pathname !== nextStep.path) {
                 navigate(nextStep.path);
             }
