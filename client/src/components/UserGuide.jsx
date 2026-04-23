@@ -59,17 +59,21 @@ const UserGuide = () => {
         if (currentStep < guideSteps.length - 1) {
             const nextIdx = currentStep + 1;
             const nextStep = guideSteps[nextIdx];
-            
+            const currentStepPath = guideSteps[currentStep].path;
+
             // Prevent navigating away from setup if profile isn't saved yet
-            if (step.path === '/setup' && nextStep.path !== '/setup') {
+            if (currentStepPath === '/setup' && nextStep.path !== '/setup') {
                 if (!user?.interests || user.interests.length === 0) {
                     alert("Please complete and save your profile setup to continue the tour!");
                     return;
                 }
             }
-            
+
             setCurrentStep(nextIdx);
-            if (location.pathname !== nextStep.path) {
+
+            // Always navigate when the NEXT step's page differs from the CURRENT step's page.
+            // We compare step paths (not live location) so the transition fires reliably.
+            if (currentStepPath !== nextStep.path) {
                 navigate(nextStep.path);
             }
         } else {
