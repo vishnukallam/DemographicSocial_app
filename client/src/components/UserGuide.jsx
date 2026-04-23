@@ -3,6 +3,9 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { MessageCircle, Check, SkipForward } from 'lucide-react';
 
 const guideSteps = [
+    { path: '/setup', message: 'You can upload a profile photo or paste an image URL. Fill in your bio so others can learn about you.' },
+    { path: '/setup', message: 'If you signed in with a social provider, set a local password here so you can also log in with your email and password.' },
+    { path: '/setup', message: 'Select your interests from the list or add a custom one. These are used to match you with nearby people who share the same passions.' },
     { path: '/home', message: 'This is your Home page. It shows a live summary of what is happening near you right now.' },
     { path: '/home', message: 'This card shows how many of your friends are within 20km of your current location.' },
     { path: '/home', message: 'This card shows how many people nearby share the same interests as you.' },
@@ -18,10 +21,7 @@ const guideSteps = [
     { path: '/friends', message: 'The Friends page shows your confirmed friends. Click on any friend to open a chat and message them. Their online/offline status is shown below their name.' },
     { path: '/profile', message: 'This is your Profile page. It shows your name, email, bio, and your selected interests.' },
     { path: '/profile', message: 'Click Edit Bio & Interests to update what others see about you.' },
-    { path: '/profile', message: 'Here you can change your password, manage blocked users, or delete your account from the Danger Zone section.' },
-    { path: '/setup', message: 'You can upload a profile photo or paste an image URL. Fill in your bio so others can learn about you.' },
-    { path: '/setup', message: 'If you signed in with a social provider, set a local password here so you can also log in with your email and password.' },
-    { path: '/setup', message: 'Select your interests from the list or add a custom one. These are used to match you with nearby people who share the same passions.' }
+    { path: '/profile', message: 'Here you can change your password, manage blocked users, or delete your account from the Danger Zone section.' }
 ];
 
 const UserGuide = () => {
@@ -34,26 +34,40 @@ const UserGuide = () => {
     useEffect(() => {
         const completed = localStorage.getItem('konnect_guide_completed');
         if (!completed) {
-            // Delay showing to let the layout render and see if we are on /home
+            // Delay showing to let the layout render
             const timer = setTimeout(() => {
                 setIsVisible(true);
-                if (location.pathname !== guideSteps[0].path) {
+                if (window.location.pathname !== guideSteps[0].path) {
                     navigate(guideSteps[0].path);
                 }
             }, 1500);
             return () => clearTimeout(timer);
         }
-    }, [location.pathname, navigate]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
     
     if (!isVisible) return null;
     
     const step = guideSteps[currentStep];
+
+    // Hide guide visually if the user hasn't arrived at the correct page yet
+    if (location.pathname !== step.path) {
+        return null;
+    }
     
     const handleNext = () => {
         if (currentStep < guideSteps.length - 1) {
             const nextIdx = currentStep + 1;
-            setCurrentStep(nextIdx);
             const nextStep = guideSteps[nextIdx];
+
+            // Special case: if we are finishing the setup steps, do not force navigate.
+            // Let the user save their profile, which will navigate them naturally to /home.
+            if (step.path === '/setup' && nextStep.path !== '/setup') {
+                setCurrentStep(nextIdx);
+                return; // Do not call navigate, let the user complete the form.
+            }
+
+            setCurrentStep(nextIdx);
             if (location.pathname !== nextStep.path) {
                 navigate(nextStep.path);
             }
