@@ -143,4 +143,14 @@ body,
   .squircle-btn {
     border-radius: 18px;
   }
+  
+  /* User Guide Highlight */
+  .guide-highlight {
+    outline: 3px solid var(--color-primary) !important;
+    outline-offset: 4px !important;
+    box-shadow: 0 0 20px var(--blur-tint) !important;
+    position: relative !important;
+    z-index: 50 !important;
+    transition: all 0.3s ease-in-out !important;
+  }
 }
