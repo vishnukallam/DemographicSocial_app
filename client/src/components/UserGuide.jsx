@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { MessageCircle, Check, SkipForward } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 
 const guideSteps = [
     { path: '/setup', message: 'You can upload a profile photo or paste an image URL. Fill in your bio so others can learn about you.' },
@@ -27,6 +28,7 @@ const guideSteps = [
 const UserGuide = () => {
     const navigate = useNavigate();
     const location = useLocation();
+    const { user } = useAuth();
     
     const [isVisible, setIsVisible] = useState(false);
     const [currentStep, setCurrentStep] = useState(0);
@@ -34,17 +36,25 @@ const UserGuide = () => {
     useEffect(() => {
         const completed = localStorage.getItem('konnect_guide_completed');
         if (!completed) {
+            const isSetupComplete = user && user.interests && user.interests.length > 0;
+            let startIdx = 0;
+            if (isSetupComplete) {
+                startIdx = guideSteps.findIndex(s => s.path !== '/setup');
+                if (startIdx === -1) startIdx = 0;
+            }
+            setCurrentStep(startIdx);
+
             // Delay showing to let the layout render
             const timer = setTimeout(() => {
                 setIsVisible(true);
-                if (window.location.pathname !== guideSteps[0].path) {
-                    navigate(guideSteps[0].path);
+                if (window.location.pathname !== guideSteps[startIdx].path) {
+                    navigate(guideSteps[startIdx].path);
                 }
             }, 1500);
             return () => clearTimeout(timer);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [user]);
     
     if (!isVisible) return null;
     

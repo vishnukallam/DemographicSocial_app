@@ -42,6 +42,7 @@ const Profile = () => {
     const handleDeleteAccount = async () => {
         try {
             await api.delete('/api/user/delete'); // Assuming endpoint exists
+            localStorage.removeItem('konnect_guide_completed');
             logout();
             navigate('/');
         } catch (err) {
