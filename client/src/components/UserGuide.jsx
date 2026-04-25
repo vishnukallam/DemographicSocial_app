@@ -4,25 +4,25 @@ import { MessageCircle, Check, SkipForward } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 const guideSteps = [
-    { path: '/setup', message: 'You can upload a profile photo or paste an image URL. Fill in your bio so others can learn about you.' },
-    { path: '/setup', message: 'If you signed in with a social provider, set a local password here so you can also log in with your email and password.' },
-    { path: '/setup', message: 'Select your interests from the list or add a custom one. These are used to match you with nearby people who share the same passions.' },
-    { path: '/home', message: 'This is your Home page. It shows a live summary of what is happening near you right now.' },
-    { path: '/home', message: 'This card shows how many of your friends are within 20km of your current location.' },
-    { path: '/home', message: 'This card shows how many people nearby share the same interests as you.' },
-    { path: '/home', message: 'These cards show the most active interest categories among people near you. Use the arrows to scroll through them.' },
-    { path: '/map', message: 'On the Map page, you can see other users as pins on the map. Click on any pin to view their profile details.' },
-    { path: '/map', message: 'When you click a user pin, their details appear here — including their name, interests, match count, bio, and options to send a friend request or get directions to their location.' },
-    { path: '/map', message: 'Use the search bar to find any place on the map by name.' },
-    { path: '/map', message: 'Toggle Global View to switch between seeing users near you and seeing all users on the map.' },
-    { path: '/map', message: 'When you click Directions on a user panel, a live route is drawn on the map with the distance and an End Trip button.' },
-    { path: '/social', message: 'Use this slider to control how many nearby users are loaded in your Social feed. Adjust it from 10 to 50.' },
-    { path: '/social', message: 'This section shows people near you (within 20km) who share your interests. The number of shared interests is shown on each card.' },
-    { path: '/social', message: 'Click Add Friend on any profile card to send them a friend request.' },
-    { path: '/friends', message: 'The Friends page shows your confirmed friends. Click on any friend to open a chat and message them. Their online/offline status is shown below their name.' },
-    { path: '/profile', message: 'This is your Profile page. It shows your name, email, bio, and your selected interests.' },
-    { path: '/profile', message: 'Click Edit Bio & Interests to update what others see about you.' },
-    { path: '/profile', message: 'Here you can change your password, manage blocked users, or delete your account from the Danger Zone section.' }
+    { path: '/setup', message: 'You can upload a profile photo or paste an image URL. Fill in your bio so others can learn about you.', targetId: 'setup-photo-bio' },
+    { path: '/setup', message: 'If you signed in with a social provider, set a local password here so you can also log in with your email and password.', targetId: 'setup-password' },
+    { path: '/setup', message: 'Select your interests from the list or add a custom one. These are used to match you with nearby people who share the same passions.', targetId: 'setup-interests' },
+    { path: '/home', message: 'This is your Home page. It shows a live summary of what is happening near you right now.', targetId: 'home-summary' },
+    { path: '/home', message: 'This card shows how many of your friends are within 20km of your current location.', targetId: 'home-friends-card' },
+    { path: '/home', message: 'This card shows how many people nearby share the same interests as you.', targetId: 'home-interests-card' },
+    { path: '/home', message: 'These cards show the most active interest categories among people near you. Use the arrows to scroll through them.', targetId: 'home-categories-card' },
+    { path: '/map', message: 'On the Map page, you can see other users as pins on the map. Click on any pin to view their profile details.', targetId: 'map-view' },
+    { path: '/map', message: 'When you click a user pin, their details appear here — including their name, interests, match count, bio, and options to send a friend request or get directions to their location.', targetId: 'map-user-panel' },
+    { path: '/map', message: 'Use the search bar to find any place on the map by name.', targetId: 'map-search' },
+    { path: '/map', message: 'Toggle Global View to switch between seeing users near you and seeing all users on the map.', targetId: 'map-global-toggle' },
+    { path: '/map', message: 'When you click Directions on a user panel, a live route is drawn on the map with the distance and an End Trip button.', targetId: 'map-user-panel' },
+    { path: '/social', message: 'Use this slider to control how many nearby users are loaded in your Social feed. Adjust it from 10 to 50.', targetId: 'social-slider' },
+    { path: '/social', message: 'This section shows people near you (within 20km) who share your interests. The number of shared interests is shown on each card.', targetId: 'social-feed' },
+    { path: '/social', message: 'Click Add Friend on any profile card to send them a friend request.', targetId: 'social-add-friend' },
+    { path: '/friends', message: 'The Friends page shows your confirmed friends. Click on any friend to open a chat and message them. Their online/offline status is shown below their name.', targetId: 'friends-list' },
+    { path: '/profile', message: 'This is your Profile page. It shows your name, email, bio, and your selected interests.', targetId: 'profile-info' },
+    { path: '/profile', message: 'Click Edit Bio & Interests to update what others see about you.', targetId: 'profile-edit' },
+    { path: '/profile', message: 'Here you can change your password, manage blocked users, or delete your account from the Danger Zone section.', targetId: 'profile-settings' }
 ];
 
 const UserGuide = () => {
@@ -55,6 +55,32 @@ const UserGuide = () => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user]);
+
+    useEffect(() => {
+        if (!isVisible) return;
+        const step = guideSteps[currentStep];
+        if (!step || !step.targetId) return;
+
+        // Add highlight class
+        const addHighlight = () => {
+            const el = document.getElementById(step.targetId);
+            if (el) {
+                el.classList.add('guide-highlight');
+            }
+        };
+
+        // Try adding it immediately and also after a short delay in case of re-renders
+        addHighlight();
+        const timeout = setTimeout(addHighlight, 300);
+
+        return () => {
+            clearTimeout(timeout);
+            const el = document.getElementById(step.targetId);
+            if (el) {
+                el.classList.remove('guide-highlight');
+            }
+        };
+    }, [currentStep, isVisible, location.pathname]);
     
     if (!isVisible) return null;
     

@@ -764,6 +764,7 @@ const MapComponent = () => {
         <div className="relative h-full w-full bg-transparent p-2 overflow-hidden">
             {/* Map Container */}
             <div
+                id="map-view"
                 ref={mapRef}
                 className="absolute inset-2 rounded-sq-2xl overflow-hidden shadow-2xl border border-white/20 dark:border-white/5"
                 style={{
@@ -789,7 +790,7 @@ const MapComponent = () => {
             </div>
 
             {/* B. Top Search Bar — M3 Search Component */}
-            <div className="absolute top-6 left-1/2 -translate-x-1/2 z-20 w-full max-w-md px-4 transition-all duration-300">
+            <div id="map-search" className="absolute top-6 left-1/2 -translate-x-1/2 z-20 w-full max-w-md px-4 transition-all duration-300">
                 <M3SearchBar
                     value={searchQuery}
                     onChange={(e) => {
@@ -819,7 +820,7 @@ const MapComponent = () => {
             </div>
 
             {/* C. Top Right Controls (Global View) - Repositioned for mobile */}
-            <div className="absolute top-24 right-4 md:top-6 md:right-6 z-20 flex gap-4">
+            <div id="map-global-toggle" className="absolute top-24 right-4 md:top-6 md:right-6 z-20 flex gap-4">
                 <div className="bg-white dark:bg-[#1C1B1F]/10 dark:backdrop-blur-2xl px-4 py-3 rounded-sq-xl shadow-xl border-[0.5px] border-white/30 dark:border-white/10 flex items-center gap-3 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all">
                     <M3Switch
                         checked={isGlobalMode}
@@ -881,7 +882,7 @@ const MapComponent = () => {
             {/* ----------------------------------------------------------------------- */}
 
             {/* E. User / Pin Detail Panel */}
-            <div className={`
+            <div id="map-user-panel" className={`
                 absolute z-30 bg-white dark:bg-[#1C1B1F]/10 dark:backdrop-blur-2xl shadow-2xl border-[0.5px] border-white/30 dark:border-white/10 transition-all duration-500 ease-in-out
                 ${(selectedUser || destinationPin) && !isNavigating ? 'translate-x-0 opacity-100 pointer-events-auto' : '-translate-x-[120%] opacity-0 pointer-events-none'}
                 md:top-24 md:left-6 md:w-80 md:rounded-sq-2xl md:h-auto md:max-h-[calc(100%-7rem)]

@@ -76,7 +76,7 @@ const Home = () => {
             <div className="w-full max-w-4xl space-y-8 flex-1">
 
                 {/* Greeting */}
-                <div className="mb-4 animate-fade-in">
+                <div id="home-summary" className="mb-4 animate-fade-in">
                     <h1 className="text-3xl md:text-4xl font-black text-[#1a100f] dark:text-white tracking-tight">
                         Hey, <span className="text-primary">{user?.displayName?.split(' ')[0]}</span> 👋
                     </h1>
@@ -87,23 +87,27 @@ const Home = () => {
 
                 {/* Stats */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <StatCard
-                        label="Friends Near You"
-                        count={stats.activeNearby}
-                        description="Friends within 20km of you"
-                        icon={Radio}
-                    />
-                    <StatCard
-                        label="Shared Interests"
-                        count={stats.matchedInterestsNearby}
-                        description="Your interests also liked by people nearby"
-                        icon={Heart}
-                    />
+                    <div id="home-friends-card">
+                        <StatCard
+                            label="Friends Near You"
+                            count={stats.activeNearby}
+                            description="Friends within 20km of you"
+                            icon={Radio}
+                        />
+                    </div>
+                    <div id="home-interests-card">
+                        <StatCard
+                            label="Shared Interests"
+                            count={stats.matchedInterestsNearby}
+                            description="Your interests also liked by people nearby"
+                            icon={Heart}
+                        />
+                    </div>
                 </div>
 
                 {/* Trending carousel */}
                 {stats.topInterests && stats.topInterests.length > 0 && (
-                    <div className="space-y-3">
+                    <div id="home-categories-card" className="space-y-3">
                         <div className="flex items-center justify-between">
                             <h3 className="text-xl font-black text-gray-900 dark:text-white flex items-center gap-2">
                                 <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />

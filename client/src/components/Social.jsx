@@ -360,7 +360,7 @@ const Social = () => {
 
             <div className="max-w-[1600px] mx-auto space-y-6">
                 {/* Limit Selector */}
-                <div className="flex flex-col md:flex-row justify-between items-center bg-white/80 dark:bg-white/5 dark:backdrop-blur-xl rounded-sq-xl p-6 shadow-sm border border-black/5 dark:border-white/5 mb-6 mx-2 transition-all gap-6">
+                <div id="social-slider" className="flex flex-col md:flex-row justify-between items-center bg-white/80 dark:bg-white/5 dark:backdrop-blur-xl rounded-sq-xl p-6 shadow-sm border border-black/5 dark:border-white/5 mb-6 mx-2 transition-all gap-6">
                     <div className="flex items-center gap-3">
                         <div className="w-10 h-10 bg-primary/10 dark:bg-white/10 rounded-sq-lg flex items-center justify-center text-primary dark:text-[#D0BCFF]">
                             <span className="material-symbols-outlined text-2xl font-bold">person_search</span>
@@ -385,7 +385,7 @@ const Social = () => {
                 </div>
 
                 {/* 1. Matched Interests Section */}
-                <div className="pt-2">
+                <div id="social-feed" className="pt-2">
                     <div className="bg-white dark:bg-white/5 dark:backdrop-blur-xl rounded-sq-xl p-4 shadow-sm border border-black/5 dark:border-white/5 mb-6 mx-2">
                         <div className="flex items-center gap-4">
                             <div className="w-10 h-10 bg-green-500 rounded-sq-lg flex items-center justify-center text-white shadow-lg shadow-green-500/30">
@@ -413,7 +413,7 @@ const Social = () => {
                 </div>
 
                 {/* 2. Discover People Section */}
-                <div className="pt-4">
+                <div id="social-add-friend" className="pt-4">
                     <div className="bg-white dark:bg-white/5 dark:backdrop-blur-xl rounded-sq-xl p-4 shadow-sm border border-black/5 dark:border-white/5 mb-6 mx-2">
                         <div className="flex items-center gap-4">
                             <div className="w-10 h-10 bg-primary rounded-sq-lg flex items-center justify-center text-white shadow-lg shadow-primary/30">

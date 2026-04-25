@@ -59,7 +59,7 @@ const Profile = () => {
                 <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
                     {/* Left Column: User Card */}
                     <section className="lg:col-span-5 flex flex-col gap-6">
-                        <div className="bg-white dark:bg-white/5 dark:backdrop-blur-2xl rounded-[28px] p-8 shadow-xl border border-white/20 dark:border-white/5 relative overflow-hidden">
+                        <div id="profile-info" className="bg-white dark:bg-white/5 dark:backdrop-blur-2xl rounded-[28px] p-8 shadow-xl border border-white/20 dark:border-white/5 relative overflow-hidden">
                             <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-r from-primary/10 to-primary/5 dark:from-primary/20 dark:to-transparent"></div>
                             <div className="relative flex flex-col items-center text-center">
                                 {/* Avatar */}
@@ -94,6 +94,7 @@ const Profile = () => {
                                 </div>
 
                                 <button
+                                    id="profile-edit"
                                     onClick={() => navigate('/setup')}
                                     className="mt-8 w-full py-3.5 px-4 rounded-full border-2 border-primary/20 text-primary hover:bg-primary hover:text-white transition-all duration-300 font-bold flex items-center justify-center gap-2 group"
                                 >
@@ -107,7 +108,7 @@ const Profile = () => {
                     {/* Right Column: Account Security & Requests */}
                     <section className="lg:col-span-7 flex flex-col gap-6">
                         {/* Account Security */}
-                        <div className="bg-white dark:bg-white/5 dark:backdrop-blur-2xl rounded-[28px] p-8 shadow-xl border-[0.5px] border-white/30 dark:border-white/10 h-fit hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all">
+                        <div id="profile-settings" className="bg-white dark:bg-white/5 dark:backdrop-blur-2xl rounded-[28px] p-8 shadow-xl border-[0.5px] border-white/30 dark:border-white/10 h-fit hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all">
                             <div className="flex items-center gap-3 mb-6 pb-4 border-b border-[#be3627]/10 dark:border-white/5">
                                 <span className="material-symbols-outlined text-primary text-2xl">security</span>
                                 <h2 className="text-xl font-display font-bold text-[#1a100f] dark:text-[#E6E1E5]">Account Security</h2>

@@ -175,7 +175,7 @@ const Friends = () => {
             )}
 
             {/* My Connections (Instagram Messages List Style) */}
-            <div className="space-y-1">
+            <div id="friends-list" className="space-y-1">
                 {friends.length === 0 ? (
                     <div className="flex flex-col items-center justify-center text-center p-12 bg-white/40 dark:bg-white/5 backdrop-blur-xl rounded-[32px] border border-black/5 dark:border-white/10 shadow-sm ring-1 ring-black/5">
                         <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center text-primary mb-4 shadow-inner">

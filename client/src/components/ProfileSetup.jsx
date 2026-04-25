@@ -156,8 +156,8 @@ const ProfileSetup = () => {
                     </div>
 
                     <form onSubmit={handleSubmit} className="space-y-8">
-                        {/* Avatar */}
-                        <div className="flex flex-col items-center gap-4">
+                        {/* Avatar & Bio (combined for guide) */}
+                        <div id="setup-photo-bio" className="flex flex-col items-center gap-4">
                             <div className="h-32 w-32 rounded-full bg-primary/10 dark:bg-primary/20 flex items-center justify-center border-4 border-white dark:border-[#141218] shadow-lg overflow-hidden relative group cursor-pointer transition-transform hover:scale-105">
                                 {previewUrl ? (
                                     <img src={previewUrl} alt="Preview" className="w-full h-full object-cover" />
@@ -203,7 +203,7 @@ const ProfileSetup = () => {
 
                         {/* Password Setup (conditionally rendered for Google users) */}
                         {user && user.hasPassword === false && (
-                            <div className="space-y-2">
+                            <div id="setup-password" className="space-y-2">
                                 <label className="block text-sm font-bold text-[#1a100f] dark:text-[#E6E1E5]" htmlFor="password">
                                     Set Local Password <span className="text-primary text-xs ml-1 font-medium">(Required)</span>
                                 </label>
@@ -237,7 +237,7 @@ const ProfileSetup = () => {
                         )}
 
                         {/* Interests */}
-                        <div className="space-y-4">
+                        <div id="setup-interests" className="space-y-4">
                             <label className="block text-sm font-bold text-[#1a100f] dark:text-[#E6E1E5] ml-1">
                                 Your Interests
                             </label>
